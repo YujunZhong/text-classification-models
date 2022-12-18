@@ -19,7 +19,11 @@ from utils import save_model
 
 
 class StemmedCountVectorizer(CountVectorizer):
+    """ count vectorizer with stemming"""
     def build_analyzer(self):
+        """ build analyzer.
+        :return: stemmed text
+        """
         stemmer = SnowballStemmer("english", ignore_stopwords=True)
 
         analyzer = super(StemmedCountVectorizer, self).build_analyzer()
@@ -33,89 +37,49 @@ class LemmaTokenizer(object):
         return [self.wnl.lemmatize(t) for t in word_tokenize(articles)]
 
 
-def train_nb_gs(train_data, val_data):
-    Train_X, Train_Y, Test_X, Test_Y = train_data['text'], train_data['label'], val_data['text'], val_data['label']
-
-    text_clf_nb = Pipeline([
-        ('vect', CountVectorizer()),
-        ('clf-nb', MultinomialNB()),
-    ])
-    
-    # grid search
-    parameters = {'vect__ngram_range': [(1, 1), (1, 2)],
-    }
-    gs_clf = GridSearchCV(text_clf_nb, parameters, n_jobs=-1)
-    gs_clf = gs_clf.fit(Train_X, Train_Y)
-
-    print(gs_clf.best_score_) # 0.8255659334497508
-    print(gs_clf.best_params_) # {'tfidf__use_idf': True, 'vect__ngram_range': (1, 2)}
-
-
 def train_nb(train_data, val_data):
+    """ Training Naive Bayesian Models.
+    :param train_data: transformed training data
+    :param val_data: transformed validation data
+    :return:
+    """
     Train_X, Train_Y, Test_X, Test_Y = train_data['text'], train_data['label'], val_data['text'], val_data['label']
 
     text_clf_nb = Pipeline([
         ('vect', CountVectorizer()),
         ('clf-nb', MultinomialNB()),
     ])
-    
+
     _ = text_clf_nb.fit(Train_X, Train_Y)
 
     preds = text_clf_nb.predict(Test_X)
     acc = np.mean(preds == Test_Y)
     print(f'Test accurary of Naive Bayes model is: {acc}')
 
-    # save_model(text_clf_nb, 'nb_trained_model.pkl')
-
-
-def train_svm_gs(train_data, val_data):
-    Train_X, Train_Y, Test_X, Test_Y = train_data['text'], train_data['label'], val_data['text'], val_data['label']
-
-    text_clf_svm = Pipeline([
-        ('vect', CountVectorizer(ngram_range=(1, 3))),
-        ('tfidf', TfidfTransformer(sublinear_tf=True)),
-        ('clf-svm', LinearSVC(loss='hinge', C=1.0, class_weight='balanced')),
-    ])
-    
-    # grid search
-    parameters = {'vect__ngram_range': [(1, 1), (1, 2)],
-                    'tfidf__use_idf': (True, False),
-    }
-    gs_clf = GridSearchCV(text_clf_svm, parameters, n_jobs=-1)
-    gs_clf = gs_clf.fit(Train_X, Train_Y)
-
-    print(gs_clf.best_score_) # 0.7969166706631305
-    print(gs_clf.best_params_) # {'vect__ngram_range': (1, 2)}
+    save_model(text_clf_nb, './save/models/nb_trained_model.pkl')
 
 
 def train_svm(train_data, val_data):
+    """ Training SVM Models.
+    :param train_data: transformed training data
+    :param val_data: transformed validation data
+    :return:
+    """
     Train_X, Train_Y, Test_X, Test_Y = train_data['text'], train_data['label'], val_data['text'], val_data['label']
 
     # linearSVC
     text_clf_svm = Pipeline([
-        ('vect', CountVectorizer(ngram_range=(1, 3))),
+        ('vect', CountVectorizer(ngram_range=(1, 2))),
         ('tfidf', TfidfTransformer(sublinear_tf=True)),
-        ('clf-svm', LinearSVC(loss='hinge', C=1.0, class_weight='balanced')),
+        ('clf-svm', LinearSVC(loss='hinge', C=0.5, class_weight='balanced')),
     ])
-    # SGDClassifier
-    # text_clf_svm = Pipeline([
-    #     ('vect', CountVectorizer()),
-    #     ('tfidf', TfidfTransformer(sublinear_tf=True)),
-    #     ('clf-svm', SGDClassifier()),
-    # ])
-    # linearSVC + stemming
-    # text_clf_svm = Pipeline([
-    #     ('vect', StemmedCountVectorizer()),
-    #     ('tfidf', TfidfTransformer(sublinear_tf=True)),
-    #     ('clf-svm', LinearSVC(loss='hinge', C=1.0, class_weight='balanced')),
-    # ])
 
     _ = text_clf_svm.fit(Train_X, Train_Y)
     preds = text_clf_svm.predict(Test_X)
     acc = np.mean(preds == Test_Y)
     print(f'Test accurary of SVM model is: {acc}')
 
-    save_model(text_clf_svm, 'svm_trained_model_trigram.pkl')
+    save_model(text_clf_svm, './save/models/svm_trained_model.pkl')
 
 
 if __name__ == "__main__":

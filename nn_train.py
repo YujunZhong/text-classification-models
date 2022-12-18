@@ -15,6 +15,12 @@ from model import TextClassificationModel
 
 
 def build_vocab(labels, texts, tokenizer):
+    """ Build vocabulary
+    :param labels: text labels
+    :param texts: test data
+    :param tokenizer: tokenizer to use
+    :return: generated vocabulary
+    """
     target_iter = iter(labels)
     text_iter = iter(texts)
     data_iter = zip(target_iter, text_iter)
@@ -32,6 +38,15 @@ def build_vocab(labels, texts, tokenizer):
 
 
 def train(epoch, dataloader, model, optimizer, criterion, exp_name):
+    """ Main function for training.
+    :param epoch: total number of epochs
+    :param dataloader: training dataloader
+    :param model: model to train
+    :param optimizer: defined optimizer
+    :param criterion: loss function
+    :param exp_name: experiment name
+    :return:
+    """
     model.train()
     total_acc, total_count = 0, 0
     log_interval = 500
@@ -60,6 +75,12 @@ def train(epoch, dataloader, model, optimizer, criterion, exp_name):
 
 
 def evaluate(dataloader, model, criterion):
+    """ Main function for evaluation.
+    :param model: model to evaluate
+    :param criterion: loss function
+    :param exp_name: experiment name
+    :return: model accuracy
+    """
     model.eval()
     total_acc, total_count = 0, 0
 
@@ -150,8 +171,8 @@ def main(exp_name, data_path, label_path, vocab_path):
 
 
 if __name__ == "__main__":
-    exp_name = "nn_model_1203_2"
-    data_path = "../data/kaggle-competition-2/train_data.csv"
+    exp_name = "nn_model_1208"
+    data_path = "../data/kaggle-competition-2/train_data.csv" # 0.796 (val) if 3 classes, 0.794 if 2 classes
     label_path = "../data/kaggle-competition-2/train_results.csv"
     vocab_path = "./save/vocab.pth"
 

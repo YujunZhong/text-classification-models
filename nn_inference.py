@@ -15,6 +15,11 @@ from model import TextClassificationModel
 
 
 def test(dataloader, model, device):
+    """ Main function for test.
+    :param model: model to evaluate
+    :param device: device used for testing
+    :return: model predictions
+    """
     model.eval()
 
     pred_list = []
