@@ -23,9 +23,15 @@ python data_process.py
 #### Test a Naive bayes or SVM model:
 <code>python nb_svm_inference.py svm</code>
 
+### SVM with word2Vec
+Pay attention to the data path. Follow the steps in the 'SVM+word2vec.ipynb'.
+
 ### Neural nets
 #### Train a simple neural network:
 <code>python nn_train.py</code>
 
 #### Test a simple neural network:
 <code>python nn_inference.py</code>
+
+### LSTM 
+Pay attention to the data path. Follow the steps in the 'LSTM.ipynb'.
