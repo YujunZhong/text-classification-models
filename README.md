@@ -34,4 +34,4 @@ Pay attention to the data path. Follow the steps in the 'svm_with_word2vec.ipynb
 <code>python nn_inference.py</code>
 
 ### LSTM and Explainability of LSTM
-Pay attention to the data path. Follow the steps in the 'lstm.ipynb'.
+Pay attention to the data path. Follow the steps in the 'LSTM.ipynb'.
