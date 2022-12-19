@@ -33,5 +33,5 @@ Pay attention to the data path. Follow the steps in the 'SVM+word2vec.ipynb'.
 #### Test a simple neural network:
 <code>python nn_inference.py</code>
 
-### LSTM 
+### LSTM and Explainability of LSTM
 Pay attention to the data path. Follow the steps in the 'LSTM.ipynb'.
