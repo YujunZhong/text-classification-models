@@ -172,7 +172,7 @@ def main(exp_name, data_path, label_path, vocab_path):
 
 if __name__ == "__main__":
     exp_name = "nn_model_1208"
-    data_path = "../data/kaggle-competition-2/train_data.csv" # 0.796 (val) if 3 classes, 0.794 if 2 classes
+    data_path = "../data/kaggle-competition-2/train_data.csv"
     label_path = "../data/kaggle-competition-2/train_results.csv"
     vocab_path = "./save/vocab.pth"
 

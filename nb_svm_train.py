@@ -1,11 +1,9 @@
 import os
 import pandas as pd
 import numpy as np
+import sys
 
 import nltk
-from nltk.tokenize import word_tokenize
-from nltk.stem import WordNetLemmatizer
-from nltk.stem.snowball import SnowballStemmer
 
 from sklearn.feature_extraction.text import TfidfTransformer, CountVectorizer
 from sklearn.svm import LinearSVC
@@ -16,25 +14,6 @@ from sklearn.model_selection import GridSearchCV
 nltk.data.path.append('/Users/yujunzhong/Documents/study/UdeM_Mila/courses/IFT6390/competition/comp2/text-classification-models/nltk_data/')
 
 from utils import save_model
-
-
-class StemmedCountVectorizer(CountVectorizer):
-    """ count vectorizer with stemming"""
-    def build_analyzer(self):
-        """ build analyzer.
-        :return: stemmed text
-        """
-        stemmer = SnowballStemmer("english", ignore_stopwords=True)
-
-        analyzer = super(StemmedCountVectorizer, self).build_analyzer()
-        return lambda doc: ([stemmer.stem(w) for w in analyzer(doc)])
-
-
-class LemmaTokenizer(object):
-    def __init__(self):
-        self.wnl = WordNetLemmatizer()
-    def __call__(self, articles):
-        return [self.wnl.lemmatize(t) for t in word_tokenize(articles)]
 
 
 def train_nb(train_data, val_data):
@@ -86,5 +65,8 @@ if __name__ == "__main__":
     data_folder = "/Users/yujunzhong/Documents/study/UdeM_Mila/courses/IFT6390/competition/comp2/data/kaggle-competition-2/new"
     train_data = pd.read_csv(os.path.join(data_folder, "train.csv"), encoding='latin-1')
     val_data = pd.read_csv(os.path.join(data_folder, "val.csv"), encoding='latin-1')
-    # train_nb_gs(train_data, val_data)
-    train_svm(train_data, val_data)
+
+    if sys.argv[1] == 'nb':
+        train_nb(train_data, val_data)
+    else:
+        train_svm(train_data, val_data)
