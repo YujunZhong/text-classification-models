@@ -13,7 +13,7 @@ from sklearn.model_selection import GridSearchCV
 
 nltk.data.path.append('/Users/yujunzhong/Documents/study/UdeM_Mila/courses/IFT6390/competition/comp2/text-classification-models/nltk_data/')
 
-from utils import save_model
+from tools.utils import save_model
 
 
 def train_nb(train_data, val_data):

@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import nltk
 
-from utils import load_model
+from tools.utils import load_model
 
 nltk.data.path.append('/Users/yujunzhong/Documents/study/UdeM_Mila/courses/IFT6390/competition/comp2/text-classification-models/nltk_data/') 
 

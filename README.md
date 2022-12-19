@@ -24,7 +24,7 @@ python data_process.py
 <code>python nb_svm_inference.py svm</code>
 
 ### SVM with word2Vec
-Pay attention to the data path. Follow the steps in the 'SVM+word2vec.ipynb'.
+Pay attention to the data path. Follow the steps in the 'svm_with_word2vec.ipynb'.
 
 ### Neural nets
 #### Train a simple neural network:
@@ -34,4 +34,4 @@ Pay attention to the data path. Follow the steps in the 'SVM+word2vec.ipynb'.
 <code>python nn_inference.py</code>
 
 ### LSTM and Explainability of LSTM
-Pay attention to the data path. Follow the steps in the 'LSTM.ipynb'.
+Pay attention to the data path. Follow the steps in the 'lstm.ipynb'.
